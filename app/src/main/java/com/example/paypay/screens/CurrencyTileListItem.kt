@@ -22,12 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.paypay.models.ConvertedRate
+import com.example.paypay.models.ConvertedCurrencyRate
 
 @Preview
 @Composable
 fun CurrencyTileItem(
-    convertedRate : ConvertedRate,
+    convertedCurrencyRate : ConvertedCurrencyRate,
     onclick : () -> Unit
 ) {
     Card( elevation = CardDefaults.cardElevation(),
@@ -44,12 +44,12 @@ fun CurrencyTileItem(
             Spacer(modifier = Modifier.padding(4.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = convertedRate.currencySymbol,
+                    text = convertedCurrencyRate.currencySymbol,
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
-                    text = convertedRate.convertedValue.toString(),
+                    text = convertedCurrencyRate.convertedValue.toString(),
                     style = MaterialTheme.typography.titleLarge
                 )
 

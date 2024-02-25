@@ -10,23 +10,34 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.paypay.screens.CurrencyScreen
 import com.example.paypay.ui.theme.PayPayTheme
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoroutineScope(Dispatchers.IO).launch {
+            DummyLocalDataManager.getConvertedCurrency(applicationContext)
+        }
         setContent {
-/*            PayPayTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }*/
+            App()
         }
     }
+}
+
+
+@Composable
+fun App() {
+    if (DummyLocalDataManager.isDataLoaded.value) {
+        CurrencyScreen(data = DummyLocalDataManager.data) {
+
+        }
+    }
+
 }
 
 @Composable

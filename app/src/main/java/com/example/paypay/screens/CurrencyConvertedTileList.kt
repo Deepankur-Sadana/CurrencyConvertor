@@ -15,13 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.paypay.models.ConvertedRate
+import com.example.paypay.models.ConvertedCurrencyRate
 
 @Composable
-fun convertedCurrencyList(data : Array<ConvertedRate>, onClick : ()-> Unit){
+fun ConvertedCurrencyList(data : Array<ConvertedCurrencyRate>, onClick : ()-> Unit){
     LazyColumn(content = {
         items(data) {
-            CurrencyTileItem(convertedRate = it) {
+            CurrencyTileItem(convertedCurrencyRate = it) {
                 onClick()
             }
         }
@@ -31,22 +31,26 @@ fun convertedCurrencyList(data : Array<ConvertedRate>, onClick : ()-> Unit){
 
 
 @Composable
-fun test() {
-    val dates = MutableList(31) { it }
+fun ConvertedCurrencyListGrid(data : Array<ConvertedCurrencyRate>, onClick : ()-> Unit) {
+//    val dates = MutableList(31) { it }
 
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth()
             .systemBarsPadding(),
-        columns = GridCells.Fixed(7),
+        columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(dates) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(text = "${it + 1}")
+        items(data) {
+
+            CurrencyTileItem(convertedCurrencyRate = it) {
+                onClick()
             }
+/*            Box(contentAlignment = Alignment.Center) {
+                Text(text = "${it + 1}")
+            }*/
         }
     }
 }
