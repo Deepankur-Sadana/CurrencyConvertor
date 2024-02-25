@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,10 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.paypay.models.ConvertedRate
 
 @Preview
 @Composable
-fun CurrencyTileItem() {
+fun CurrencyTileItem(
+    convertedRate : ConvertedRate,
+    onclick : () -> Unit
+) {
     Card( elevation = CardDefaults.cardElevation(),
         modifier = Modifier.padding(4.dp)
     ) {
@@ -42,12 +44,12 @@ fun CurrencyTileItem() {
             Spacer(modifier = Modifier.padding(4.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "USD/INR",
+                    text = convertedRate.currencySymbol,
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
-                    text = "1345.456",
+                    text = convertedRate.convertedValue.toString(),
                     style = MaterialTheme.typography.titleLarge
                 )
 
