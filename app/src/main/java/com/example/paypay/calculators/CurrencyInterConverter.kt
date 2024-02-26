@@ -6,11 +6,13 @@ class CurrencyInterConverter(
 ) {
 
 
-    fun loadCurrencyMap(map: HashMap<String, Float>) {
-        if (map["USD"] == null || map["USD"] != 1F) {
+    fun loadCurrencyMap(map: HashMap<String, Double>) {
+        if (map["USD"] == null || map["USD"] != 1.00) {
             currencyConvertedErrorListener.onError()
         }
     }
+
+
     fun convertTo(toCurrencyCode: String) {
 
     }

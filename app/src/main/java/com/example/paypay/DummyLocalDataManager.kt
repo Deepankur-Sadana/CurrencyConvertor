@@ -8,7 +8,7 @@ import com.google.gson.Gson
 object DummyLocalDataManager {
 
     var isDataLoaded = mutableStateOf(false)
-    val data = Array<ConvertedCurrencyRate>(21) { ConvertedCurrencyRate("asd", 23f) }
+    val data = Array<ConvertedCurrencyRate>(21) { ConvertedCurrencyRate("asd", 23.00) }
     fun getCurrencyLost(context: Context) {
         val inputStream = context.assets.open("currency_list.json")
         val size: Int = inputStream.available()

@@ -11,7 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.room.Room
 import com.example.paypay.api.CurrencyApi
+import com.example.paypay.db.CurrencyDataBase
+import com.example.paypay.db.CurrencyRate
 import com.example.paypay.screens.CurrencyScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -27,10 +30,21 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var currencyApi: CurrencyApi
+
+    lateinit var currencyDataBase: CurrencyDataBase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currencyDataBase = Room.databaseBuilder(
+            context = applicationContext,
+            klass = CurrencyDataBase::class.java,
+            name = "currencyDB"
+        ).build()
+
 
         GlobalScope.launch {
+            currencyDataBase.userDao().insertAll(CurrencyRate(1,"EEE", "1243"))
+            currencyDataBase.userDao().insertAll(CurrencyRate(2,"DDD", "32434"))
+
             delay(5000)
             val response = currencyApi.getCurrencyList().body()
             Log.d(TAG , "$response")

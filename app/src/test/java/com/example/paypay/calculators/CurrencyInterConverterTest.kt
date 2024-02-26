@@ -31,27 +31,27 @@ class CurrencyInterConverterTest {
     fun `if the conversion rates are not bound to USD (base rate of USD = 1), it throws error` () {
         val currencyInterConverter = CurrencyInterConverter(currencyConvertedErrorListener)
         val map = getCurrencyMap()
-        map[USD] = 12.22F
+        map[USD] = 12.22
         currencyInterConverter.loadCurrencyMap(map)
         verify(currencyConvertedErrorListener).onError()
         verifyNoMoreInteractions(currencyConvertedErrorListener)
     }
 
-    private fun getMapWithoutUSD(): HashMap<String, Float> {
+    private fun getMapWithoutUSD(): HashMap<String, Double> {
         val map = HashMap(getCurrencyMap())
         map.remove(USD)
         return map
     }
 
 
-    private fun getCurrencyMap(): HashMap<String, Float> {
-        val map = HashMap<String, Float>()
-        map["USD"] = 1F
-        map["AOA"] = 831.5F
-        map["ARS"] = 837.615005F
-        map["AUD"] = 1.525734F
-        map["AWG"] = 1.8F
-        map["AZN"] = 1.7F
+    private fun getCurrencyMap(): HashMap<String, Double> {
+        val map = HashMap<String, Double>()
+        map["USD"] = 1.0
+        map["AOA"] = 831.5
+        map["ARS"] = 837.615005
+        map["AUD"] = 1.525734
+        map["AWG"] = 1.8
+        map["AZN"] = 1.7
         return map
     }
 
