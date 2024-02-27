@@ -12,9 +12,10 @@ object CurrencyFixtures {
         res.add(ConvertedCurrencyRate("USD", 1.0))
         res.add(ConvertedCurrencyRate("AOA", 831.5))
         res.add(ConvertedCurrencyRate("ARS", 34.5))
+        res.add(ConvertedCurrencyRate("INR", 80.5))
         return res
-
     }
+
     fun getCurrencyMap(): HashMap<String, Double> {
         val map = HashMap<String, Double>()
         map["USD"] = 1.0

@@ -23,10 +23,14 @@ class CurrencyPageViewModel @Inject constructor(
         const val DEFAULT_AMOUNT = 1.0
     }
 
-    var inputAmount = DEFAULT_AMOUNT
-    var currency = DEFAULT_CURRENCY
-    fun updateInputAmount(value: Double) {
+    private var inputAmount = DEFAULT_AMOUNT
+    private var currency = DEFAULT_CURRENCY
 
+    fun updateInputAmount(value: String) {
+        if (value.toDoubleOrNull() == null) return
+        this.inputAmount = value.toDouble()
+        val procesedList = currencyInterConverter.convertTo(currency, inputAmount)
+        _uiState.value = LatestCurrencyUiState.Success(procesedList)
     }
 
     private var staticMapOfCurrencies = MutableStateFlow(LatestCurrencyUiState.Success(emptyList()))

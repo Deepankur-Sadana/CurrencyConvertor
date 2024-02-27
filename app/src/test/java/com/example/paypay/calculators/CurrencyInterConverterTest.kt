@@ -56,7 +56,23 @@ class CurrencyInterConverterTest {
 
         //when
         val updateAmountList = currencyInterConverter.updateAmount(10.0)
-        Truth.assertThat(updateAmountList.size).isEqualTo(3)
+        Truth.assertThat(updateAmountList.size).isEqualTo(getCurrencyListForConvertor().size)
+        Truth.assertThat(updateAmountList[0].convertedValue).isEqualTo(10.0)
+
+        verifyNoMoreInteractions(currencyConvertedErrorListener)
+    }
+
+
+    @Test
+    fun `if the currency is updated to INR, all the corresponding values are updated` () {
+        //given
+        val currencyInterConverter = CurrencyInterConverter(currencyConvertedErrorListener)
+        currencyInterConverter.loadCurrencyList(getCurrencyListForConvertor())
+
+        //when
+//        val updateAmountList = currencyInterConverter.updateAmount(10.0)
+        val updateAmountList = currencyInterConverter.convertTo("INR", 10.0)
+        Truth.assertThat(updateAmountList.size).isEqualTo(getCurrencyListForConvertor().size)
         Truth.assertThat(updateAmountList[0].convertedValue).isEqualTo(10.0)
 
         verifyNoMoreInteractions(currencyConvertedErrorListener)

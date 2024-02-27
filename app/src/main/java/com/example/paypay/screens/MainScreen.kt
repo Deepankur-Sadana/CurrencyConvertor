@@ -40,7 +40,7 @@ fun CurrencyScreen(
             value = state.value,
             onValueChange = {
                 state.value = it
-                viewModel.updateInputAmount(it.toDouble())
+                viewModel.updateInputAmount(it)
             },
             label = { Text("Enter amount here") }
         )

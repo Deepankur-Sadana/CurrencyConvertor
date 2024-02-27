@@ -9,7 +9,7 @@ import com.example.paypay.models.ConvertedCurrencyRate
  *
  */
 interface ICurrencyInterConverter {
-    fun convertTo(toCurrencyCode: String): List<ConvertedCurrencyRate>
+    fun convertTo(toCurrencyCode: String, amount: Double): List<ConvertedCurrencyRate>
     fun loadCurrencyMap(map: HashMap<String, Double>)
     fun loadCurrencyList(list: List<ConvertedCurrencyRate>)
     fun updateAmount(newAmount: Double): List<ConvertedCurrencyRate>
@@ -33,16 +33,29 @@ class CurrencyInterConverter(
     }
 
     override fun updateAmount(newAmount: Double) :List<ConvertedCurrencyRate> {
-        val updatedAmount = ArrayList<ConvertedCurrencyRate>()
+        val updatedAmountList = ArrayList<ConvertedCurrencyRate>()
         currencyRates.forEach {
-            updatedAmount.add(ConvertedCurrencyRate(it.currencySymbol, it.convertedValue * newAmount))
+            updatedAmountList.add(ConvertedCurrencyRate(it.currencySymbol, it.convertedValue * newAmount))
         }
-        return updatedAmount
+        return updatedAmountList
     }
 
 
-    override fun convertTo(toCurrencyCode: String): List<ConvertedCurrencyRate> {
-        TODO()
+    override fun convertTo(toCurrencyCode: String, amount: Double): List<ConvertedCurrencyRate> {
+        var existingRateOfCurrency = -1.0
+        for (i in currencyRates.indices) {
+            val currencySymbol = currencyRates[i].currencySymbol
+            if (currencySymbol == toCurrencyCode) {
+                existingRateOfCurrency = currencyRates[i].convertedValue
+                break
+            }
+        }
+
+        val updatedAmountList = ArrayList<ConvertedCurrencyRate>()
+        currencyRates.forEach {
+            updatedAmountList.add(ConvertedCurrencyRate(it.currencySymbol, it.convertedValue * amount))
+        }
+        return updatedAmountList
     }
 
 }
