@@ -17,7 +17,6 @@ object DummyLocalDataManager {
         inputStream.close()
         val json = String(buffer, Charsets.UTF_8)
         val gson = Gson()
-//        data = gson.fromJson(json , Array<Map>::class.java)
     }
 
     fun getConvertedCurrency(context: Context) {
