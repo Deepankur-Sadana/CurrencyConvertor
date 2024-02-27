@@ -9,7 +9,7 @@ import androidx.room.Query
 interface CurrencyRateDao {
 
     @Query("SELECT * FROM currencyrate")
-    fun getAllCurrency(): LiveData<List<CurrencyRate>>
+    suspend fun getAllCurrency(): List<CurrencyRate>
 
     @Insert
     suspend fun insertAll(vararg currency: CurrencyRate)

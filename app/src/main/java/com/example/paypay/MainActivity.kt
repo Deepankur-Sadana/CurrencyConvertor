@@ -11,11 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.paypay.api.CurrencyApi
 import com.example.paypay.db.CurrencyDataBase
 import com.example.paypay.db.CurrencyRate
 import com.example.paypay.screens.CurrencyScreen
+import com.example.paypay.viewmodels.CurrencyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +41,8 @@ class MainActivity : ComponentActivity() {
             klass = CurrencyDataBase::class.java,
             name = "currencyDB"
         ).build()
+        val viewModel = ViewModelProvider(this)
+            .get(CurrencyPageViewModel::class.java)
 
 
         GlobalScope.launch {
