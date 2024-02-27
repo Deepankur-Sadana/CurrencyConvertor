@@ -100,9 +100,7 @@ class DataManagerTest {
 
         //then
         verify(currencyRateDao).getAllCurrency()
-        //verify(currencyRateDao).insertAll(any())
-        //verifyNoMoreInteractions(currencyRateDao)
 
-        Truth.assertThat(result.size).isEqualTo(0)
+        Truth.assertThat(result.size).isEqualTo(6)
     }
 }

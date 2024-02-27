@@ -25,7 +25,7 @@ class RemoteRepository @Inject constructor(
         if (response.isSuccessful && response.body() != null) {
             val symbols = StringBuilder()
             //"AED,INR,USD,EUR"
-            response.body()!!.entries.forEach { symbols.append("${it},") }
+            response.body()!!.entries.forEach { symbols.append("${it.key},") }
             val exchangeRateResponse = remoteApi
                 .getLatestExchangeRates(symbols.toString())
                 .body()

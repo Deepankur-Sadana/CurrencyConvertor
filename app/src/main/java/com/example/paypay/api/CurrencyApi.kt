@@ -9,7 +9,7 @@ interface CurrencyApi {
 //    .url("https://openexchangerates.org/api/currencies.json?prettyprint=false&show_alternative=false&show_inactive=false&app_id=f0223b66dbd7460fb41437707310cdbd")
 
     @GET("/currencies.json")
-    suspend fun getCurrencyList(): Response<Map<String, Double>>
+    suspend fun getCurrencyList(): Response<Map<String, String>>
 
     @GET("/latest.json")
     suspend fun getLatestExchangeRates(

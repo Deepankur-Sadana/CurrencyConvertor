@@ -3,6 +3,8 @@ package com.example.paypay.di
 import android.content.Context
 import com.example.paypay.DataManager
 import com.example.paypay.IDataManager
+import com.example.paypay.calculators.CurrencyInterConverter
+import com.example.paypay.calculators.ICurrencyInterConverter
 import com.example.paypay.data.DataRefresher
 import com.example.paypay.data.IDataRefresher
 import com.example.paypay.data.IOSTimeFetcher
@@ -57,6 +59,13 @@ class DataModule {
         @ApplicationContext context: Context,
     ): IPrefReader {
         return PreferenceReader(context)
+    }
+
+    @Singleton
+    @Provides
+    fun providesCurrencyConverted(
+    ): ICurrencyInterConverter {
+        return CurrencyInterConverter()
     }
 
     @Singleton
