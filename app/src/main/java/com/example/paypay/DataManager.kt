@@ -1,5 +1,6 @@
 package com.example.paypay
 
+import com.example.paypay.data.DataRefreshListener
 import com.example.paypay.db.CurrencyRate
 import com.example.paypay.db.CurrencyRateDao
 import com.example.paypay.models.ConvertedCurrencyRate
@@ -7,7 +8,7 @@ import com.example.paypay.repository.RemoteRepository
 
 
 interface IDataManager {
-    suspend fun getData(): List<ConvertedCurrencyRate>
+    suspend fun getData(dataRefreshListener: DataRefreshListener): List<ConvertedCurrencyRate>
     suspend fun getRefreshedData(): List<ConvertedCurrencyRate>
 }
 
@@ -15,12 +16,13 @@ class DataManager(
     private val currencyRateDao: CurrencyRateDao,
     private val remoteRepository: RemoteRepository
 ) : IDataManager {
-    override suspend fun getData(): List<ConvertedCurrencyRate> {
+    override suspend fun getData(dataRefreshListener: DataRefreshListener): List<ConvertedCurrencyRate> {
         val data = currencyRateDao.getAllCurrency()
         return if (data.isEmpty().not()) {
             mapLocalData(data)
         } else {
             val dataFromServer = remoteRepository.getExchangeRatesList()
+            dataRefreshListener.onDataRefreshed()
             saveServerDataToDB(dataFromServer)
             mapLocalData(dataFromServer)
         }

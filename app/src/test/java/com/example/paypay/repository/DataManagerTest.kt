@@ -7,7 +7,6 @@ import com.example.paypay.db.CurrencyRate
 import com.example.paypay.db.CurrencyRateDao
 import com.example.paypay.models.ConvertedCurrencyRate
 import com.google.common.truth.Truth
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -31,7 +30,7 @@ class DataManagerTest {
 //            .thenReturn(CurrencyFixtures.getCurrencyMap())
 
         //when
-        dataManager.getData()
+        dataManager.getData(dataRefresher.getDataRefreshListener())
 
         //then
         verify(currencyRateDao).getAllCurrency()
@@ -51,7 +50,7 @@ class DataManagerTest {
         )
         whenever(currencyRateDao.getAllCurrency()).thenReturn(listOfStoredData)
         //when
-        dataManager.getData()
+        dataManager.getData(dataRefresher.getDataRefreshListener())
 
         //then
         verify(currencyRateDao).getAllCurrency()
@@ -70,7 +69,7 @@ class DataManagerTest {
         )
         whenever(currencyRateDao.getAllCurrency()).thenReturn(listOfStoredData)
         //when
-        val result = dataManager.getData()
+        val result = dataManager.getData(dataRefresher.getDataRefreshListener())
 
         val excepted =  listOf(
             ConvertedCurrencyRate( "USD", 1.0) ,
@@ -96,7 +95,7 @@ class DataManagerTest {
             .thenReturn(CurrencyFixtures.getCurrencyMap())
 
         //when
-        val result = dataManager.getData()
+        val result = dataManager.getData(dataRefresher.getDataRefreshListener())
 
         //then
         verify(currencyRateDao).getAllCurrency()

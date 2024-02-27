@@ -35,9 +35,10 @@ class CurrencyPageViewModel @Inject constructor(
         const val DEFAULT_AMOUNT = 1.0
     }
 
+
     init {
         viewModelScope.launch {
-            val data = dataManager.getData()
+            val data = dataManager.getData(dataRefresher.getDataRefreshListener())
             setDefaultCurrency(data)
             currencyInterConverter.loadCurrencyList(data)
             staticMapOfCurrencies.value = LatestCurrencyUiState.Success(data)
@@ -48,17 +49,17 @@ class CurrencyPageViewModel @Inject constructor(
     fun updateInputAmount(value: String) {
         if (value.toDoubleOrNull() == null) return
         this.inputAmount = value.toDouble()
-        reCalculateRates(selectedCurrency.currencySymbol, inputAmount)
+        reCalculateRates(selectedCurrency.currencySymbol)
     }
 
-    private fun reCalculateRates(currency: String, amount: Double) {
+    private fun reCalculateRates(currency: String) {
         val computedList = currencyInterConverter.convertTo(currency, inputAmount)
         _uiState.value = LatestCurrencyUiState.Success(computedList)
     }
 
     fun updateInputCurrencyIndex(index: Int) {
         selectedCurrency = staticMapOfCurrencies.value.convertedCurrencyRates[index]
-        reCalculateRates(selectedCurrency.currencySymbol, inputAmount)
+        reCalculateRates(selectedCurrency.currencySymbol)
     }
 
 

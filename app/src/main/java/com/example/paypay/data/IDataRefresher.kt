@@ -4,7 +4,9 @@ import com.example.paypay.IDataManager
 
 interface IDataRefresher {
     suspend fun checkAndRefreshData()
-    suspend fun updateRefreshTime(epoch : Long)
+    suspend fun updateRefreshTime(epoch: Long)
+
+    fun getDataRefreshListener(): DataRefreshListener
 }
 
 class DataRefresher(
@@ -12,6 +14,10 @@ class DataRefresher(
     private val dataManager: IDataManager,
     private val timeFetcher: IOSTimeFetcher
 ) : IDataRefresher {
+
+    companion object {
+
+    }
 
     @Volatile
     private var refreshInProgrees = false
@@ -30,8 +36,18 @@ class DataRefresher(
         }
     }
 
+    private val dataRefreshListener = object : DataRefreshListener {
+        override fun onDataRefreshed() {
+            prefReader.updateRefreshTime(System.currentTimeMillis())
+        }
+    }
+
     override suspend fun updateRefreshTime(epoch: Long) {
         prefReader.updateRefreshTime(epoch)
+    }
+
+    override fun getDataRefreshListener(): DataRefreshListener {
+        return dataRefreshListener
     }
 
 }
