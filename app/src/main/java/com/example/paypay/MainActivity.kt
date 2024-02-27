@@ -42,8 +42,8 @@ class MainActivity : ComponentActivity() {
 
 
         GlobalScope.launch {
-            currencyDataBase.userDao().insertAll(CurrencyRate(1,"EEE", "1243"))
-            currencyDataBase.userDao().insertAll(CurrencyRate(2,"DDD", "32434"))
+            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(1,"EEE", "1243"))
+            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(2,"DDD", "32434"))
 
             delay(5000)
             val response = currencyApi.getCurrencyList().body()

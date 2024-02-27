@@ -1,3 +1,6 @@
 package com.example.paypay.models
 
-class ConvertedCurrencyRate(val currencySymbol : String, val convertedValue : Double)
+class ConvertedCurrencyRate(
+    val currencySymbol : String,
+    val convertedValue : Double
+)
