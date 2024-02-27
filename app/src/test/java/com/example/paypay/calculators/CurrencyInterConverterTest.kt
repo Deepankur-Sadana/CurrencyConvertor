@@ -1,5 +1,6 @@
 package com.example.paypay.calculators
 
+import com.example.paypay.calculators.CurrencyFixtures.getCurrencyMap
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -44,15 +45,6 @@ class CurrencyInterConverterTest {
     }
 
 
-    private fun getCurrencyMap(): HashMap<String, Double> {
-        val map = HashMap<String, Double>()
-        map["USD"] = 1.0
-        map["AOA"] = 831.5
-        map["ARS"] = 837.615005
-        map["AUD"] = 1.525734
-        map["AWG"] = 1.8
-        map["AZN"] = 1.7
-        return map
-    }
+
 
 }

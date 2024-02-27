@@ -2,16 +2,19 @@ package com.example.paypay.api
 
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface CurrencyApi {
 
 //    .url("https://openexchangerates.org/api/currencies.json?prettyprint=false&show_alternative=false&show_inactive=false&app_id=f0223b66dbd7460fb41437707310cdbd")
 
     @GET("/currencies.json")
-    suspend fun getCurrencyList() : Response<Map<String, String>>
+    suspend fun getCurrencyList(): Response<Map<String, Double>>
 
     @GET("/latest.json")
-    suspend fun getLatestExchangeRates() : Response<LatestExchangeRateResponse>
+    suspend fun getLatestExchangeRates(
+        @Query("symbols") symbols: String,
+    ): Response<LatestExchangeRateResponse>
 }
 
 /**

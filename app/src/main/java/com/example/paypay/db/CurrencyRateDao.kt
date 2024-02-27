@@ -13,5 +13,8 @@ interface CurrencyRateDao {
 
     @Insert
     suspend fun insertAll(vararg currency: CurrencyRate)
+
+    @Query("DELETE FROM currencyrate")
+    fun deleteAllEntries()
 }
 

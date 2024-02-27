@@ -46,12 +46,14 @@ class MainActivity : ComponentActivity() {
 
 
         GlobalScope.launch {
-            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(1,"EEE", "1243"))
-            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(2,"DDD", "32434"))
+//            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(13,"EFE", "1243"))
+//            currencyDataBase.currencyRateDao().insertAll(CurrencyRate(234,"4DD", "32434"))
 
+            val symbols = "AED,INR,USD,EUR"
             delay(5000)
-            val response = currencyApi.getCurrencyList().body()
+            val response = currencyApi.getLatestExchangeRates(symbols).body()
             Log.d(TAG , "$response")
+            Log.d(TAG , "${response?.rates}")
         }
 
         CoroutineScope(Dispatchers.IO).launch {
