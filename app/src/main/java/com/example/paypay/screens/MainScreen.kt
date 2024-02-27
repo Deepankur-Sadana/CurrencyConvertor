@@ -45,12 +45,15 @@ fun CurrencyScreen(
             label = { Text("Enter amount here") }
         )
 
-        var selectedIndex by remember { mutableStateOf(-1) }
+        var selectedIndex by remember { mutableStateOf(0) }
         LargeDropdownMenu(
             label = "Currencies",
             items = data.map { it.currencySymbol },
             selectedIndex = selectedIndex,
-            onItemSelected = { index, _ -> selectedIndex = index },
+            onItemSelected = { index, _ ->
+                selectedIndex = index
+                viewModel.updateInputCurrencyIndex(index)
+                             },
         )
 
         ConvertedCurrencyListGrid(data = data) {

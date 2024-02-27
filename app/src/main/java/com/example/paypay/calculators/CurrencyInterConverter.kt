@@ -51,9 +51,16 @@ class CurrencyInterConverter(
             }
         }
 
+
+        val newFactorToNormalizer = 1 / existingRateOfCurrency // To make it one
+        val finalFactor = newFactorToNormalizer * amount
+
         val updatedAmountList = ArrayList<ConvertedCurrencyRate>()
         currencyRates.forEach {
-            updatedAmountList.add(ConvertedCurrencyRate(it.currencySymbol, it.convertedValue * amount))
+            updatedAmountList.add(
+                ConvertedCurrencyRate(it.currencySymbol,
+                    it.convertedValue * finalFactor)
+            )
         }
         return updatedAmountList
     }

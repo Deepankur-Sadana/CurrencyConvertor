@@ -4,6 +4,7 @@ import com.example.paypay.IDataManager
 
 interface IDataRefresher {
     suspend fun checkAndRefreshData()
+    suspend fun updateRefreshTime(epoch : Long)
 }
 
 class DataRefresher(
@@ -27,6 +28,10 @@ class DataRefresher(
                 refreshInProgrees = false
             }
         }
+    }
+
+    override suspend fun updateRefreshTime(epoch: Long) {
+        prefReader.updateRefreshTime(epoch)
     }
 
 }

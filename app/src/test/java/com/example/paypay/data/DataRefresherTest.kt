@@ -62,4 +62,25 @@ class DataRefresherTest {
         //then
         verifyNoMoreInteractions(dataManager)
     }
+
+    @Test
+    fun `it can save data refreshed TTL`() = runBlocking {
+        //given
+        val dataRefresher = DataRefresher(prefReader, dataManager, timeFetcher)
+
+        whenever(prefReader.getLastStoredEpochTime())
+            .thenReturn(null)
+
+        //when
+        dataRefresher.updateRefreshTime(12)
+
+        //then
+        verify(prefReader).updateRefreshTime(12)
+        verifyNoMoreInteractions(dataManager)
+    }
+
+
+
+
+
 }
