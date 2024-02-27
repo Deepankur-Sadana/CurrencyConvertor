@@ -3,6 +3,12 @@ package com.example.paypay.di
 import android.content.Context
 import com.example.paypay.DataManager
 import com.example.paypay.IDataManager
+import com.example.paypay.data.DataRefresher
+import com.example.paypay.data.IDataRefresher
+import com.example.paypay.data.IOSTimeFetcher
+import com.example.paypay.data.IPrefReader
+import com.example.paypay.data.OSTimeFetcher
+import com.example.paypay.data.PreferenceReader
 import com.example.paypay.db.CurrencyDataBase
 import com.example.paypay.repository.RemoteRepository
 import dagger.Module
@@ -23,6 +29,7 @@ class DataModule {
     ): CurrencyDataBase {
         return CurrencyDataBase.getInstance(context)
     }
+
     @Singleton
     @Provides
     fun providesDataManager(
@@ -34,5 +41,32 @@ class DataModule {
             dataBase.currencyRateDao(),
             remoteRepository
         )
+    }
+
+
+    @Singleton
+    @Provides
+    fun providesTimeFetcher(
+    ): IOSTimeFetcher {
+        return OSTimeFetcher()
+    }
+
+    @Singleton
+    @Provides
+    fun providesPrefReader(
+        @ApplicationContext context: Context,
+    ): IPrefReader {
+        return PreferenceReader(context)
+    }
+
+    @Singleton
+    @Provides
+    fun providesDataRefresher(
+        @ApplicationContext context: Context,
+        dataManager: IDataManager,
+        preferenceReader: IPrefReader,
+        osTimeFetcher: IOSTimeFetcher
+    ): IDataRefresher {
+        return DataRefresher(preferenceReader, dataManager, osTimeFetcher)
     }
 }

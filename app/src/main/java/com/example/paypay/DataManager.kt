@@ -8,6 +8,7 @@ import com.example.paypay.repository.RemoteRepository
 
 interface IDataManager {
     suspend fun getData(): List<ConvertedCurrencyRate>
+    suspend fun getRefreshedData(): List<ConvertedCurrencyRate>
 }
 
 class DataManager(
@@ -16,11 +17,27 @@ class DataManager(
 ) : IDataManager {
     override suspend fun getData(): List<ConvertedCurrencyRate> {
         val data = currencyRateDao.getAllCurrency()
-        if (data.isEmpty()) {
+        return if (data.isEmpty().not()) {
+            mapLocalData(data)
+        } else {
             val dataFromServer = remoteRepository.getExchangeRatesList()
             saveServerDataToDB(dataFromServer)
+            mapLocalData(dataFromServer)
         }
-        return mapData(data)
+    }
+
+    override suspend fun getRefreshedData(): List<ConvertedCurrencyRate> {
+        val dataFromServer = remoteRepository.getExchangeRatesList()
+        saveServerDataToDB(dataFromServer)
+        return mapLocalData(dataFromServer)
+    }
+
+    private fun mapLocalData(dataFromServer: Map<String, Double>): List<ConvertedCurrencyRate> {
+        val res = ArrayList<ConvertedCurrencyRate>()
+        dataFromServer.forEach {
+            res.add(ConvertedCurrencyRate(it.key, it.value))
+        }
+        return res
     }
 
     private suspend fun saveServerDataToDB(dataFromServer: Map<String, Double>) {
@@ -32,11 +49,11 @@ class DataManager(
         currencyRateDao.insertAll(*list.toTypedArray())
     }
 
-    private fun mapData(
+    private fun mapLocalData(
         dbData: List<CurrencyRate>
     ): List<ConvertedCurrencyRate> {
         val res = ArrayList<ConvertedCurrencyRate>()
-        dbData.forEach{
+        dbData.forEach {
             res.add(ConvertedCurrencyRate(it.symbol!!, it.value!!.toDouble()))
         }
         return res
