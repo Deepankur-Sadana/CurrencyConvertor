@@ -18,13 +18,30 @@ class CurrencyPageViewModel @Inject constructor(
     private val currencyInterConverter: ICurrencyInterConverter
 ) : ViewModel() {
 
+    companion object {
+        const val DEFAULT_CURRENCY = "USD"
+        const val DEFAULT_AMOUNT = 1.0
+    }
+
+    var inputAmount = DEFAULT_AMOUNT
+    var currency = DEFAULT_CURRENCY
+    fun updateInputAmount(value: Double) {
+
+    }
+
+    private var staticMapOfCurrencies = MutableStateFlow(LatestCurrencyUiState.Success(emptyList()))
+
     private val _uiState = MutableStateFlow(LatestCurrencyUiState.Success(emptyList()))
+
     // The UI collects from this StateFlow to get its state updates
     val uiState: StateFlow<LatestCurrencyUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            _uiState.value = LatestCurrencyUiState.Success(dataManager.getData())
+            val data = dataManager.getData()
+            currencyInterConverter.loadCurrencyList(data)
+            staticMapOfCurrencies.value = LatestCurrencyUiState.Success(data)
+            _uiState.value = LatestCurrencyUiState.Success(data)
         }
     }
 

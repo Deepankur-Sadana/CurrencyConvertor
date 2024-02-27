@@ -2,9 +2,19 @@ package com.example.paypay.calculators
 
 import com.example.paypay.api.LatestExchangeRateResponse
 import com.example.paypay.db.CurrencyRate
+import com.example.paypay.models.ConvertedCurrencyRate
 
 object CurrencyFixtures {
 
+
+    fun getCurrencyListForConvertor() : List<ConvertedCurrencyRate>{
+        val res = ArrayList<ConvertedCurrencyRate>()
+        res.add(ConvertedCurrencyRate("USD", 1.0))
+        res.add(ConvertedCurrencyRate("AOA", 831.5))
+        res.add(ConvertedCurrencyRate("ARS", 34.5))
+        return res
+
+    }
     fun getCurrencyMap(): HashMap<String, Double> {
         val map = HashMap<String, Double>()
         map["USD"] = 1.0

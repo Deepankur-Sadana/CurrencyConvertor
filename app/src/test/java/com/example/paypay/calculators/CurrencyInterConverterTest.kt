@@ -1,6 +1,8 @@
 package com.example.paypay.calculators
 
+import com.example.paypay.calculators.CurrencyFixtures.getCurrencyListForConvertor
 import com.example.paypay.calculators.CurrencyFixtures.getCurrencyMap
+import com.google.common.truth.Truth
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -38,11 +40,28 @@ class CurrencyInterConverterTest {
         verifyNoMoreInteractions(currencyConvertedErrorListener)
     }
 
+
     private fun getMapWithoutUSD(): HashMap<String, Double> {
         val map = HashMap(getCurrencyMap())
         map.remove(USD)
         return map
     }
+
+
+    @Test
+    fun `if the amount is increased to 10, all the corresponding values are updated` () {
+        //given
+        val currencyInterConverter = CurrencyInterConverter(currencyConvertedErrorListener)
+        currencyInterConverter.loadCurrencyList(getCurrencyListForConvertor())
+
+        //when
+        val updateAmountList = currencyInterConverter.updateAmount(10.0)
+        Truth.assertThat(updateAmountList.size).isEqualTo(3)
+        Truth.assertThat(updateAmountList[0].convertedValue).isEqualTo(10.0)
+
+        verifyNoMoreInteractions(currencyConvertedErrorListener)
+    }
+
 
 
 

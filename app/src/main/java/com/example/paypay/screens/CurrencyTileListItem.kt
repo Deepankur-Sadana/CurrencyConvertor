@@ -35,7 +35,6 @@ fun CurrencyTileItem(
     ) {
         Row(modifier = Modifier.padding(6.dp)) {
 
-//            Spacer(modifier = Modifier.padding(4.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = convertedCurrencyRate.currencySymbol,
@@ -43,6 +42,8 @@ fun CurrencyTileItem(
                 )
 
                 Text(
+                    minLines = 2,
+                    maxLines = 2,
                     text = convertedCurrencyRate.convertedValue.toString(),
                     style = MaterialTheme.typography.titleLarge
                 )
