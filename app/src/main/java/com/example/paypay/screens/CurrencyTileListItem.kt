@@ -33,15 +33,9 @@ fun CurrencyTileItem(
     Card( elevation = CardDefaults.cardElevation(),
         modifier = Modifier.padding(4.dp)
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
-            Image(
-                imageVector = Icons.Filled.Build,
-                colorFilter = ColorFilter.tint(Color.White),
-                alignment = Alignment.Center,
-                contentDescription = "Image",
-                modifier = Modifier.background(Color.Black)
-            )
-            Spacer(modifier = Modifier.padding(4.dp))
+        Row(modifier = Modifier.padding(6.dp)) {
+
+//            Spacer(modifier = Modifier.padding(4.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = convertedCurrencyRate.currencySymbol,

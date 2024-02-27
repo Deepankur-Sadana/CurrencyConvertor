@@ -31,8 +31,7 @@ fun ConvertedCurrencyList(data : Array<ConvertedCurrencyRate>, onClick : ()-> Un
 
 
 @Composable
-fun ConvertedCurrencyListGrid(data : Array<ConvertedCurrencyRate>, onClick : ()-> Unit) {
-//    val dates = MutableList(31) { it }
+fun ConvertedCurrencyListGrid(data : List<ConvertedCurrencyRate>, onClick : ()-> Unit) {
 
     LazyVerticalGrid(
         modifier = Modifier
@@ -44,13 +43,9 @@ fun ConvertedCurrencyListGrid(data : Array<ConvertedCurrencyRate>, onClick : ()-
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(data) {
-
             CurrencyTileItem(convertedCurrencyRate = it) {
                 onClick()
             }
-/*            Box(contentAlignment = Alignment.Center) {
-                Text(text = "${it + 1}")
-            }*/
         }
     }
 }
