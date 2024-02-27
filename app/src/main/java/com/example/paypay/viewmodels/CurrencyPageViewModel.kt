@@ -38,6 +38,7 @@ class CurrencyPageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            dataRefresher.checkAndRefreshData()
             val data = dataManager.getData(dataRefresher.getDataRefreshListener())
             setDefaultCurrency(data)
             currencyInterConverter.loadCurrencyList(data)
@@ -60,6 +61,10 @@ class CurrencyPageViewModel @Inject constructor(
     fun updateInputCurrencyIndex(index: Int) {
         selectedCurrency = staticMapOfCurrencies.value.convertedCurrencyRates[index]
         reCalculateRates(selectedCurrency.currencySymbol)
+        //TODO ds move this from here
+        viewModelScope.launch {
+            dataRefresher.checkAndRefreshData()
+        }
     }
 
 

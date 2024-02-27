@@ -3,6 +3,7 @@ package com.example.paypay.repository
 import com.example.paypay.DataManager
 import com.example.paypay.calculators.CurrencyFixtures
 import com.example.paypay.calculators.CurrencyFixtures.getCurrencyRateListFromDB
+import com.example.paypay.data.DataRefreshListener
 import com.example.paypay.db.CurrencyRate
 import com.example.paypay.db.CurrencyRateDao
 import com.example.paypay.models.ConvertedCurrencyRate
@@ -18,6 +19,7 @@ class DataManagerTest {
 
     private val currencyRateDao = mock<CurrencyRateDao>()
     private val remoteRepository = mock<RemoteRepository>()
+    private val dataRefreshListener = mock<DataRefreshListener>()
     @Test
     fun `when requested for data it queries local DB for exchange rates` () = runBlocking {
         //given
@@ -30,7 +32,7 @@ class DataManagerTest {
 //            .thenReturn(CurrencyFixtures.getCurrencyMap())
 
         //when
-        dataManager.getData(dataRefresher.getDataRefreshListener())
+        dataManager.getData(dataRefreshListener)
 
         //then
         verify(currencyRateDao).getAllCurrency()
@@ -50,7 +52,7 @@ class DataManagerTest {
         )
         whenever(currencyRateDao.getAllCurrency()).thenReturn(listOfStoredData)
         //when
-        dataManager.getData(dataRefresher.getDataRefreshListener())
+        dataManager.getData(dataRefreshListener)
 
         //then
         verify(currencyRateDao).getAllCurrency()
@@ -69,7 +71,7 @@ class DataManagerTest {
         )
         whenever(currencyRateDao.getAllCurrency()).thenReturn(listOfStoredData)
         //when
-        val result = dataManager.getData(dataRefresher.getDataRefreshListener())
+        val result = dataManager.getData(dataRefreshListener)
 
         val excepted =  listOf(
             ConvertedCurrencyRate( "USD", 1.0) ,
@@ -95,7 +97,7 @@ class DataManagerTest {
             .thenReturn(CurrencyFixtures.getCurrencyMap())
 
         //when
-        val result = dataManager.getData(dataRefresher.getDataRefreshListener())
+        val result = dataManager.getData(dataRefreshListener)
 
         //then
         verify(currencyRateDao).getAllCurrency()
